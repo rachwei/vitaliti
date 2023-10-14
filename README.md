@@ -6,6 +6,7 @@ medicine and pill reminder app
 ```$ git clone https://github.com/rachwei/vitaliti.git```
 
 to start the backend:
+
 ```$ cd backend```
 
 ```$ npx expo start```
