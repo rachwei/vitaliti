@@ -15,9 +15,13 @@ const Spacer = ({ size }) => (
 const medications = [
     {"name": "Vitamin D", "status": "Took"},
     {"name": "Vitamin C", "status": "Missed"},
-    {"name": "Zinc", "status": "Missed"},
     {"name": "Adderall", "status": "Took"},
-    {"name": "Birth Control", "status": "Missed"},
+]
+
+const medications_not = [
+    {"name": "Vitamin D", "status": "Missed"},
+    {"name": "Vitamin C", "status": "Missed"},
+    {"name": "Adderall", "status": "Missed"},
 ]
 
 export default function CalendarScreen(props) {
@@ -65,9 +69,9 @@ export default function CalendarScreen(props) {
                 markingType='interactive'
             />
             </View>
-            {selectedDate && 
-                <MedicationByDate date={selectedDate} medications={medications} style={{"backgroundColor":"white", wdith: "100%"}}></MedicationByDate>
-            }
+            {selectedDate && (selectedDate==='2023-10-14' || selectedDate==='2023-10-13' || selectedDate==='2023-10-10') 
+            ? <MedicationByDate date={selectedDate} medications={medications} style={{"backgroundColor":"white", wdith: "100%"}}></MedicationByDate> 
+            : <MedicationByDate date={selectedDate} medications={medications_not} style={{"backgroundColor":"white", wdith: "100%"}}></MedicationByDate> }
         </View>
     );
 }
