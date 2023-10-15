@@ -14,9 +14,9 @@ const Spacer = ({ size }) => (
 // hard coded medications
 const medications = [
     {"name": "Vitamin D", "status": "Took"},
-    {"name": "Vitamin C", "status": "Took"},
-    {"name": "Zinc", "status": "Took"},
-    {"name": "Adderall", "status": "Skipped"},
+    {"name": "Vitamin C", "status": "Missed"},
+    {"name": "Zinc", "status": "Missed"},
+    {"name": "Adderall", "status": "Took"},
     {"name": "Birth Control", "status": "Missed"},
 ]
 
@@ -59,7 +59,8 @@ export default function CalendarScreen(props) {
                 // displayLoadingIndicator={true}
                 markedDates={{
                     ['2023-10-10']: { startingDay: true, selected: true, selectedColor: 'green' },
-                    ['2023-10-14']: { endingDay: true, selected: true, selectedColor: 'green' },
+                    ['2023-10-13']: { endingDay: true, selected: true, selectedColor: 'green' },
+                    ['2023-10-14']: { endingDay: true, selected: true, marked: true, selectedColor: 'green' },
                 }}
                 markingType='interactive'
             />
