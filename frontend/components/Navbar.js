@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-import Calendar from './Calendar'
+import CalendarScreen from './Calendar'
 import HomeScreen from './HomeScreen'
 import Meds from './Meds'
 
@@ -11,7 +11,6 @@ const Tab = createBottomTabNavigator();
 
 export default function Navbar() {
   return (
-    // <Text>Hello</Text>
     <Tab.Navigator
         screenOptions={({ route }) => ({
             tabBarIcon: ({ color, size }) => {
@@ -31,7 +30,7 @@ export default function Navbar() {
             tabBarInactiveTintColor: 'gray',
         })}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Calendar" component={Calendar} />
+      <Tab.Screen name="Calendar" component={CalendarScreen} initialParams={{ streak: 30 }}/>
       <Tab.Screen name="Meds" component={Meds} />
     </Tab.Navigator>
   );

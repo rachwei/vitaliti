@@ -3,10 +3,12 @@ medicine and pill reminder app
 
 
 # how to start our project!
-```https://github.com/rachwei/vitaliti.git```
-
-to start the backend:
-```cd backend```
-```npx expo start```
+```$ git clone https://github.com/rachwei/vitaliti.git```
 
 to start the frontend:
+
+```$ cd backend```
+
+```$ npx expo start```
+
+to start the backend:
