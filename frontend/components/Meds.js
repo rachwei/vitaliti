@@ -6,7 +6,7 @@ function Medication(props) {
 
     const [notes, setNotes] = useState(props.notes == null ? "No notes yet" : props.notes);
     const [name, setName] = useState(props.name == null ? "Unnamed" : props.name);
-    const [alert, setAlert] = useState(props.alert == null ? "Set time to take medication" : props.alert);
+    const [alert, setAlert] = useState(props.alert == null ? "Set schedule to take medication" : props.alert);
   
     const handleEditClick = () => {
       setEditing(!isEditing);
