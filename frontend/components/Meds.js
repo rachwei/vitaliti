@@ -241,5 +241,6 @@ const medicationStyles = StyleSheet.create({
         marginVertical: 4,
         fontSize: 14,
         marginVertical: 2,
+        textDecorationLine: 'underline'
     },
 });
