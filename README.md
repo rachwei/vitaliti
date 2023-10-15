@@ -12,3 +12,5 @@ to start the frontend:
 ```$ npx expo start```
 
 to start the backend:
+
+```$ python3 server.py```
