@@ -14,10 +14,14 @@ const Spacer = ({ size }) => (
 // hard coded medications
 const medications = [
     {"name": "Vitamin D", "status": "Took"},
-    {"name": "Vitamin C", "status": "Took"},
-    {"name": "Zinc", "status": "Took"},
-    {"name": "Adderall", "status": "Skipped"},
-    {"name": "Birth Control", "status": "Missed"},
+    {"name": "Vitamin C", "status": "Missed"},
+    {"name": "Adderall", "status": "Took"},
+]
+
+const medications_not = [
+    {"name": "Vitamin D", "status": "Missed"},
+    {"name": "Vitamin C", "status": "Missed"},
+    {"name": "Adderall", "status": "Missed"},
 ]
 
 export default function CalendarScreen(props) {
@@ -59,14 +63,15 @@ export default function CalendarScreen(props) {
                 // displayLoadingIndicator={true}
                 markedDates={{
                     ['2023-10-10']: { startingDay: true, selected: true, selectedColor: 'green' },
-                    ['2023-10-14']: { endingDay: true, selected: true, selectedColor: 'green' },
+                    ['2023-10-13']: { endingDay: true, selected: true, selectedColor: 'green' },
+                    ['2023-10-14']: { endingDay: true, selected: true, marked: true, selectedColor: 'green' },
                 }}
                 markingType='interactive'
             />
             </View>
-            {selectedDate && 
-                <MedicationByDate date={selectedDate} medications={medications} style={{"backgroundColor":"white", wdith: "100%"}}></MedicationByDate>
-            }
+            {selectedDate && (selectedDate==='2023-10-14' || selectedDate==='2023-10-13' || selectedDate==='2023-10-10') 
+            ? <MedicationByDate date={selectedDate} medications={medications} style={{"backgroundColor":"white", wdith: "100%"}}></MedicationByDate> 
+            : <MedicationByDate date={selectedDate} medications={medications_not} style={{"backgroundColor":"white", wdith: "100%"}}></MedicationByDate> }
         </View>
     );
 }
