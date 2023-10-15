@@ -6,7 +6,7 @@ function Medication(props) {
 
     const [notes, setNotes] = useState(props.notes == null ? "No notes yet" : props.notes);
     const [name, setName] = useState(props.name == null ? "Unnamed" : props.name);
-    const [alert, setAlert] = useState(props.alert == null ? "No alerts set" : props.alert);
+    const [alert, setAlert] = useState(props.alert == null ? "Set time to take medication" : props.alert);
   
     const handleEditClick = () => {
       setEditing(!isEditing);
@@ -101,12 +101,9 @@ const CircularAddButton = ({ onPress }) => {
 
 export default function Meds() {
     const [medicationsData, setMedicationsData] = useState([
-        { id: 1, name: 'Vitamin D', alert: 'M, T, W, Th, F, Sa, Su 9:00 a.m.'},
-        { id: 2, name: 'Vitamin A', alert: 'M, T, W, Th, F, Sa, Su 9:00 a.m.', notes: 'Take with water!'},
-        { id: 3, name: 'Vitamin B', alert: 'M, T, W, Th, F, Sa, Su 9:00 a.m.', notes: 'Take with water!'},
-        { id: 4, name: 'Vitamin C', alert: 'M, T, W, Th, F, Sa, Su 9:00 a.m.', notes: 'Take with water!'},
-        { id: 5, name: 'Vitamin E', alert: 'M, T, W, Th, F, Sa, Su 9:00 a.m.', notes: 'Take with water!'},
-        { id: 6, name: 'Birth Control Patch', alert: 'F 5:00 PM', notes: 'Cramps'}
+        { id: 1, name: 'Adderall', alert: 'M, T, W, Th, F, Sa 9:00 a.m.', notes: 'Don\'t take on Sundays to decrease dependence, eat food within first hour!'},
+        { id: 2, name: 'Vitamin D', alert: 'M, T, W, Th, F, Sa, Su 9:00 a.m.', notes: 'No side effects'},
+        // { id: 3, name: 'Birth Control', alert: 'M, T, W, Th, F, Sa, Su 7:00 p.m.', notes: 'Headaches and nausea :('}
     ]);
     
     const [nextID, setNextID] = useState(medicationsData.length + 1);
@@ -167,9 +164,7 @@ export default function Meds() {
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
         backgroundColor: '#fff',
-        // alignItems: 'left',
         justifyContent: 'center',
         padding: 10,
     },
@@ -197,7 +192,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         padding: 10,
         color: 'black',
-        // justifyContent: 'center',
         flex: 5
     },
     addButton: {
