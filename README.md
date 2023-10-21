@@ -7,9 +7,15 @@ medicine and pill reminder app
 
 to start the frontend:
 
-```$ cd backend```
+```$ cd frontend```
+
+to run on expo go app:
 
 ```$ npx expo start```
+
+to run on xcode simulator:
+
+```$ npm run ios```
 
 to start the backend:
 
