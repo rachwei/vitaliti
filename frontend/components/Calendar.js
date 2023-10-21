@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {Calendar, LocaleConfig, CalendarList, Agenda} from 'react-native-calendars';
 
@@ -7,25 +7,40 @@ import MedicationByDate from './MedicationByDate';
 // calendar resource: https://github.com/wix/react-native-calendars#scrollable-semi-infinite-calendar
 //https://medium.com/@reactsharing.com/react-native-calendar-components-410cecb54cdf
 
+
+/*
+TODO:
+1. Change hardcoded marked dates
+2. Change hardcoded streak number
+3. Refresh after switching tabs, without having to reclick date
+*/
+
+
 const Spacer = ({ size }) => (
     <View style={{ height: size, width: size }} />
 );
 
-// hard coded medications
-const medications = [
-    {"name": "Vitamin D", "status": "Took"},
-    {"name": "Vitamin C", "status": "Missed"},
-    {"name": "Adderall", "status": "Took"},
-]
-
-const medications_not = [
-    {"name": "Vitamin D", "status": "Missed"},
-    {"name": "Vitamin C", "status": "Missed"},
-    {"name": "Adderall", "status": "Missed"},
-]
-
 export default function CalendarScreen(props) {
-    const [selectedDate, setSelectedDate] = useState("2023-10-24");
+    const [selectedDate, setSelectedDate] = useState();
+    const [medications, setMedications] = useState([]);
+
+    useEffect(() => {
+        fetchMedicationData(selectedDate);
+    }, [selectedDate]);
+    
+    const fetchMedicationData = async (date) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/api/medications/${date}`);
+            if (response.status === 200) {
+                const data = await response.json();
+                setMedications(data.medications);
+            } else {
+                console.error('Failed to fetch medication data');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
     return (
     <View style={styles.container}>
@@ -49,6 +64,7 @@ export default function CalendarScreen(props) {
                 onDayPress={day => {
                     console.log('doing the agenda for this day', day);
                     setSelectedDate(day.dateString);
+                    fetchMedicationData(selectedDate);
                 }}
                 // Handler which gets executed on day-long press. Default = undefined
                 onDayLongPress={day => {
@@ -69,9 +85,19 @@ export default function CalendarScreen(props) {
                 markingType='interactive'
             />
             </View>
-            {selectedDate && (selectedDate==='2023-10-14' || selectedDate==='2023-10-13' || selectedDate==='2023-10-10') 
-            ? <MedicationByDate date={selectedDate} medications={medications} style={{"backgroundColor":"white", wdith: "100%"}}></MedicationByDate> 
-            : <MedicationByDate date={selectedDate} medications={medications_not} style={{"backgroundColor":"white", wdith: "100%"}}></MedicationByDate> }
+            <View>
+                {selectedDate && medications ? (
+                    <MedicationByDate
+                    date={selectedDate}
+                    medications={medications}
+                    style={{ backgroundColor: 'white', width: '100%' }}
+                    />
+                ) : (
+                    <View style={styles.noDataContainer}>
+                        <Text style={styles.noDataText}>No recorded data on selected day.</Text>
+                    </View>
+                )}
+            </View>
         </View>
     );
 }
@@ -86,5 +112,13 @@ const styles = StyleSheet.create({
     streak: {
         color: "green",
         fontSize: 25
-    }
+    },
+    noDataContainer: {
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        height: 120,
+        paddingTop: 20,
+        paddingLeft: 40
+    },
+
 });

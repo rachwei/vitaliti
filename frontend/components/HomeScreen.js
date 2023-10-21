@@ -7,17 +7,52 @@ export default function HomeScreen() {
         "Adderall",
         "Vitamin D",
         "Birth Control"
-      ]);
+    ]);
+
+    const [newMedication, setNewMedication] = useState('');
+    const [selectedChips, setSelectedChips] = useState(Array(medications.length+1).fill(''));
+
+    const date = new Date().toISOString().split('T')[0];
     
-      const [newMedication, setNewMedication] = useState('');
-      const [selectedChips, setSelectedChips] = useState(
-        Array(medications.length+1).fill('')
-      );
+
+    const recordMedicationStatus = async (index, status) => {
+
+        // DATE OFFSET
+        // let date = new Date();
+        // const offset = date.getTimezoneOffset()
+        // date = new Date(date.getTime() - (offset*60*1000))
+        // date.toISOString().split('T')[0]
+
+        try {
+            // Currently using localhost url to test
+            const response = await fetch('http://127.0.0.1:5000/api/record-medication', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                medicationIndex: index,
+                medicationName: medications[index],
+                status: status,
+                date: date,
+            }),
+            });
+        
+            if (response.status === 200) {
+            console.log('Medication status recorded successfully');
+            } else {
+            console.error('Failed to record medication status');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
     const handleSelect = (index, label) => {
         const newSelectedChips = [...selectedChips];
         newSelectedChips[index] = label;
         setSelectedChips(newSelectedChips);
+        recordMedicationStatus(index, label)
     };
 
     const addMedication = () => {
@@ -58,13 +93,9 @@ export default function HomeScreen() {
                 <View style={styles.medicine}>
                     <ChoiceChip
                         label="Taken"
-                        selected={selectedChips[medications.length + 1] === 'Taken'}
-                        onSelect={() => handleSelect(medications.length + 1, 'Taken')}
                     />
                     <ChoiceChip
                         label="Skipped"
-                        selected={selectedChips[medications.length + 1] === 'Skipped'}
-                        onSelect={() => handleSelect(medications.length + 1, 'Skipped')}
                     />
                     <TextInput
                     style={
